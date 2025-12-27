@@ -26,7 +26,7 @@ const Dashboard: React.FC<Props> = ({ repoData }) => {
     >
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-3xl font-bold">Dashboard Overview</h1>
-        <motion.button 
+        <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={handleNewIntegration}
@@ -38,25 +38,25 @@ const Dashboard: React.FC<Props> = ({ repoData }) => {
 
       {/* Stats Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <StatCard 
+        <StatCard
           icon={<Users size={24} />}
           title="Active Contributors"
           value={repoData.contributors?.length || 0}
           trend={12}
         />
-        <StatCard 
+        <StatCard
           icon={<GitPullRequest size={24} />}
           title="Open PRs"
           value={repoData.pull_requests?.open || 0}
           trend={repoData.pull_requests?.open || 0}
         />
-        <StatCard 
+        <StatCard
           icon={<MessageSquare size={24} />}
           title="Community Posts"
           value="892" // Placeholder, replace with dynamic if available
           trend={8}
         />
-        <StatCard 
+        <StatCard
           icon={<Activity size={24} />}
           title="Response Rate"
           value="94%" // Placeholder, replace with dynamic if available
@@ -67,21 +67,21 @@ const Dashboard: React.FC<Props> = ({ repoData }) => {
       {/* Quick Actions */}
       <h2 className="text-2xl font-bold mb-6">Quick Actions</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <BotIntegration 
+        <BotIntegration
           platform="GitHub"
           icon={<Github size={24} />}
           connected={true}
           description="Automate your GitHub workflow"
           features={['Issue triage', 'PR reviews', 'Welcome messages']}
         />
-        <BotIntegration 
+        <BotIntegration
           platform="Discord"
           icon={<MessageSquare size={24} />}
           connected={false}
           description="Engage with your community"
           features={['Support channels', 'Role management', 'Event notifications']}
         />
-        <BotIntegration 
+        <BotIntegration
           platform="Slack"
           icon={<Slack size={24} />}
           connected={true}

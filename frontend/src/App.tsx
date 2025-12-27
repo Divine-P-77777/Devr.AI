@@ -18,6 +18,8 @@ import SignUpPage from './components/pages/SignUpPage';
 import { supabase } from './lib/supabaseClient';
 import ForgotPasswordPage from './components/pages/ForgotPasswordPage';
 import ResetPasswordPage from './components/pages/ResetPasswordPage';
+import { useLocation } from 'react-router-dom';
+
 
 // Define proper TypeScript interfaces
 interface RepositoryData {
@@ -101,26 +103,46 @@ function App() {
     setRepoData(null);
   };
 
-  const ProtectedLayout = () => (
-    <div className="flex">
-      <Sidebar
-        isOpen={isSidebarOpen}
-        setIsOpen={setIsSidebarOpen}
-        onLogout={handleLogout}
-      />
-      <main
-        className={`transition-all duration-300 flex-1 ${
-          isSidebarOpen ? 'ml-64' : 'ml-20'
-        }`}
-      >
-        <div className="p-8">
-          <AnimatePresence mode="wait">
-            <Outlet />
-          </AnimatePresence>
-        </div>
-      </main>
-    </div>
-  );
+  const ProtectedLayout = () => {
+    const location = useLocation();
+
+    const landingAllowedRoutes = [
+      '/dashboard',
+      '/contributors',
+      '/analytics',
+      '/prs',
+    ];
+
+    const shouldShowLanding =
+      !repoData && landingAllowedRoutes.includes(location.pathname);
+
+    return (
+      <div className="flex">
+        <Sidebar
+          isOpen={isSidebarOpen}
+          setIsOpen={setIsSidebarOpen}
+          onLogout={handleLogout}
+        />
+
+        <main
+          className={`transition-all duration-300 flex-1 ${isSidebarOpen ? 'ml-64' : 'ml-20'
+            }`}
+        >
+          <div className="p-8">
+            {/* Conditional Landing Page */}
+            {shouldShowLanding && (
+              <LandingPage setRepoData={setRepoData} />
+            )}
+
+            <AnimatePresence mode="wait">
+              <Outlet />
+            </AnimatePresence>
+          </div>
+        </main>
+      </div>
+    );
+  };
+
 
   return (
     <Router>
